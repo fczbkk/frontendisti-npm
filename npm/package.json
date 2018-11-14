@@ -1,0 +1,30 @@
+{
+  "name": "frontendisti-npm",
+  "version": "1.0.0",
+  "description": "How to ditch Gulp in favour of NPM.",
+  "keywords": [
+    "frontendisti",
+    "npm"
+  ],
+  "author": "Riki Fridrich <riki@fczbkk.com> (https://github.com/fczbkk)",
+  "license": "MIT",
+  "devDependencies": {
+    "chokidar-cli": "^1.2.1",
+    "concurrently": "^4.0.1",
+    "mkdirp": "^0.5.1",
+    "node-sass": "^4.10.0",
+    "rimraf": "^2.6.2",
+    "svgo": "^1.1.1"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run styles:watch\" \"npm run images:watch\"",
+    "build": "npm run cleanup && concurrently \"npm run styles:build\" \"npm run images\"",
+    "cleanup": "rimraf ./build",
+    "styles": "node-sass ./../src --output ./build",
+    "styles:watch": "npm run styles -- --watch",
+    "styles:build": "npm run styles -- --output-style compressed",
+    "preimages": "mkdirp ./build",
+    "images": "svgo --folder ./../src/ --output ./build",
+    "images:watch": "chokidar \"./../src/**/*.svg\" --command \"npm run images\""
+  }
+}
